@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
+
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -101,14 +102,23 @@ public class LarryPushbotTeleopTank_Iterative extends OpMode{
         left = -gamepad1.left_stick_y;
         right = -gamepad1.right_stick_y;
 
+
         robot.leftDrive.setPower(left);
         robot.rightDrive.setPower(right);
 
+
+        // Use gamepad left & right Bumpers to open and close the claw
+        //if (gamepad1.right_bumper)
+          //  clawOffset += CLAW_SPEED;
+        //else if (gamepad1.left_bumper)
+          //  clawOffset -= CLAW_SPEED;
+
         // Use gamepad left & right Bumpers to open and close the claw
         if (gamepad1.right_bumper)
-            clawOffset += CLAW_SPEED;
+            robot.mainArm.setPower(robot.ARM_UP_POWER);
         else if (gamepad1.left_bumper)
-            clawOffset -= CLAW_SPEED;
+            robot.mainArm.setPower(robot.ARM_DOWN_POWER);
+
 
         // Move both servos to new position.  Assume servos are mirror image of each other.
         clawOffset = Range.clip(clawOffset, -0.5, 0.5);
@@ -125,6 +135,7 @@ public class LarryPushbotTeleopTank_Iterative extends OpMode{
 
 
         //Slide Arm Controller buttons??????
+
 
 
 
