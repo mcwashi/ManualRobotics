@@ -113,11 +113,10 @@ public class LarryPushbotTeleopTank_Iterative extends OpMode{
         //else if (gamepad1.left_bumper)
           //  clawOffset -= CLAW_SPEED;
 
-        // Use gamepad left & right Bumpers to open and close the claw
-        if (gamepad1.right_bumper)
-            robot.mainArm.setPower(robot.ARM_UP_POWER);
-        else if (gamepad1.left_bumper)
-            robot.mainArm.setPower(robot.ARM_DOWN_POWER);
+
+
+
+
 
 
         // Move both servos to new position.  Assume servos are mirror image of each other.
@@ -135,6 +134,10 @@ public class LarryPushbotTeleopTank_Iterative extends OpMode{
 
 
         //Slide Arm Controller buttons??????
+        if (gamepad1.right_bumper)
+            robot.slideArm.setPower(robot.ARM_UP_POWER);
+        else if (gamepad1.left_bumper)
+            robot.slideArm.setPower(robot.ARM_DOWN_POWER);
 
 
 
