@@ -117,9 +117,9 @@ public class LarryHardwarePushbot
 
         leftClaw.setPosition(MID_SERVO);
         rightClaw.setPosition(MID_SERVO);
-        longReclicClaw.setPosition(MID_SERVO);
-        shortReclicClaw.setPosition(MID_SERVO);
-        colorSensorServo.setPosition(MID_SERVO);
+        longReclicClaw.setPosition(0);
+        shortReclicClaw.setPosition(0);
+        colorSensorServo.setPosition(0);
     }
  }
 
