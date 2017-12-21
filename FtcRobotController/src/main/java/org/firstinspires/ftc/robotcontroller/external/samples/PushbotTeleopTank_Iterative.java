@@ -113,6 +113,7 @@ public class PushbotTeleopTank_Iterative extends OpMode{
         robot.leftClaw.setPosition(robot.MID_SERVO + clawOffset);
         robot.rightClaw.setPosition(robot.MID_SERVO - clawOffset);
 
+
         // Use gamepad buttons to move the arm up (Y) and down (A)
         if (gamepad1.y)
             robot.leftArm.setPower(robot.ARM_UP_POWER);

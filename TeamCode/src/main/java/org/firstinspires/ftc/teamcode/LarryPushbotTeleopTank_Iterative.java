@@ -129,11 +129,11 @@ public class LarryPushbotTeleopTank_Iterative extends OpMode{
 
         // Use gamepad buttons to move the arm up (Y) and down (A)
         if (gamepad1.y)
-            robot.mainArm.setPower(robot.ARM_UP_POWER);
+            robot.mainArm.setPower(1);
         else if (gamepad1.a)
-            robot.mainArm.setPower(robot.ARM_DOWN_POWER);
+            robot.mainArm.setPower(-0.01);
         else
-            robot.mainArm.setPower(0.5);
+            robot.mainArm.setPower(0.2);
 
 
         //Slide Arm Controller buttons??????
