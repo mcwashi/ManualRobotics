@@ -106,8 +106,8 @@ public class LarryPushbotTeleopTank_Iterative extends OpMode{
         // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
         left = -gamepad1.left_stick_y;
         right = -gamepad1.right_stick_y;
-        longRelicClaw = gamepad1.left_trigger;
-        shortRelicClaw = gamepad1.right_trigger;
+        longRelicClaw = gamepad2.left_trigger;
+        shortRelicClaw = gamepad2.right_trigger;
 
         robot.leftDrive.setPower(left);
         robot.rightDrive.setPower(right);
@@ -119,6 +119,7 @@ public class LarryPushbotTeleopTank_Iterative extends OpMode{
             clawOffset += CLAW_SPEED;
         else if (gamepad1.x)
             clawOffset -= CLAW_SPEED;
+
 
 
 
@@ -137,9 +138,9 @@ public class LarryPushbotTeleopTank_Iterative extends OpMode{
 
 
         //Slide Arm Controller buttons??????
-        if (gamepad1.right_bumper)
+        if (gamepad2.right_bumper)
             robot.slideArm.setPower(robot.ARM_UP_POWER);
-        else if (gamepad1.left_bumper)
+        else if (gamepad2.left_bumper)
             robot.slideArm.setPower(robot.ARM_DOWN_POWER);
         else
             robot.slideArm.setPower(0.0);
