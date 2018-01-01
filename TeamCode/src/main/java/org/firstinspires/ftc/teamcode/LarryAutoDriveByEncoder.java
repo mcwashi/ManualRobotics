@@ -66,8 +66,10 @@ public class LarryAutoDriveByEncoder extends LinearOpMode {
     static final double WHEEL_DIAMETER_INCHES = 3.0;     // For figuring circumference
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double DRIVE_SPEED = 0.6;
+    static final double DRIVE_SPEED = 0.1;
     static final double TURN_SPEED = 0.5;
+    double          clawOffset  = 0.0 ;                  // Servo mid position
+    final double    CLAW_SPEED  = 0.02 ;
     ColorSensor sensorColor;
     DistanceSensor sensorDistance;
 
@@ -168,8 +170,8 @@ public class LarryAutoDriveByEncoder extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        armDown(10.0);
-        jewel(20.0);
+        armDown(3.0);
+        jewel(12.0);
         //encoderDrive(DRIVE_SPEED, 4, 4, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         //encoderDrive(TURN_SPEED, 3, -3, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         //encoderDrive(DRIVE_SPEED, 3, 3, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
@@ -281,14 +283,38 @@ public class LarryAutoDriveByEncoder extends LinearOpMode {
         while (opModeIsActive() && holdTimer.time() < holdTime) {
             //if (sensorColor.blue() > 10) {
             if (colorSensor.blue() > colorSensor.red()) {
-                encoderDrive(DRIVE_SPEED, 1, 1, 1.0);  // S1: Forward 47 Inches with 5 Sec timeout
-                //encoderDrive(TURN_SPEED, -2, 2, 2.0);
-                //encoderDrive(TURN_SPEED, 2, -2, 2.0);
-            //    robot.colorSensorServo.setPosition(0.0);
-            } else {
-                //encoderDrive(TURN_SPEED, 2, -2, 2.0);
-                //encoderDrive(TURN_SPEED, -2, 2, 2.0);
+                //Move servo arm up
                 robot.colorSensorServo.setPosition(0.0);
+
+                //Move Backwards.
+                encoderDrive(DRIVE_SPEED, -.25, -.25, 2.0);  // S1: Forward 47 Inches with 5 Sec timeout
+
+
+
+
+
+            } else {
+                //Move Forward
+                encoderDrive(DRIVE_SPEED, .15, .15, 1.0);  // S1: Forward 47 Inches with 5 Sec timeout
+
+                //Move servo arm up
+                robot.colorSensorServo.setPosition(0.0);
+
+                //Grab the block
+                clawOffset += CLAW_SPEED;
+
+                //Move arm up
+                robot.mainArm.setPower(.50);
+
+                //Move Forward again
+               // encoderDrive(DRIVE_SPEED, .25, .25, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+
+                //Open up the arms
+                //clawOffset -= CLAW_SPEED;
+
+                //Move Backwards.
+                //encoderDrive(DRIVE_SPEED, -.25, -.25, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+
 
             }
             //robot.leftDrive.setPower(0);
@@ -296,12 +322,6 @@ public class LarryAutoDriveByEncoder extends LinearOpMode {
         }
     }
 
-
-    public void armUp(double holdTime){
-
-        robot.colorSensorServo.setPosition(0.0);
-
-    }
 
 
 
