@@ -171,7 +171,7 @@ public class LarryAutoDriveByEncoder extends LinearOpMode {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         armDown(3.0);
-        jewel(12.0);
+        jewel(3.0);
         //encoderDrive(DRIVE_SPEED, 4, 4, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         //encoderDrive(TURN_SPEED, 3, -3, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         //encoderDrive(DRIVE_SPEED, 3, 3, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
@@ -239,7 +239,7 @@ public class LarryAutoDriveByEncoder extends LinearOpMode {
             robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            //  sleep(250);   // optional pause after each move
+              sleep(5000);   // optional pause after each move
         }
     }
     public void jewel(double holdTime){
@@ -283,11 +283,17 @@ public class LarryAutoDriveByEncoder extends LinearOpMode {
         while (opModeIsActive() && holdTimer.time() < holdTime) {
             //if (sensorColor.blue() > 10) {
             if (colorSensor.blue() > colorSensor.red()) {
+
+
+               // sleep(3000);
                 //Move servo arm up
-                robot.colorSensorServo.setPosition(0.0);
+
+                sleep(3000);
 
                 //Move Backwards.
-                encoderDrive(DRIVE_SPEED, -.25, -.25, 2.0);  // S1: Forward 47 Inches with 5 Sec timeout
+                encoderDrive(DRIVE_SPEED, -4, -4, .75);  // S1: Forward 47 Inches with 5 Sec timeout
+                robot.colorSensorServo.setPosition(0.0);
+
 
 
 
@@ -295,13 +301,13 @@ public class LarryAutoDriveByEncoder extends LinearOpMode {
 
             } else {
                 //Move Forward
-                encoderDrive(DRIVE_SPEED, .15, .15, 1.0);  // S1: Forward 47 Inches with 5 Sec timeout
+                encoderDrive(DRIVE_SPEED, 37, 37, 4.0);  // S1: Forward 47 Inches with 5 Sec timeout
 
                 //Move servo arm up
                 robot.colorSensorServo.setPosition(0.0);
 
                 //Grab the block
-                clawOffset += CLAW_SPEED;
+                //clawOffset += CLAW_SPEED;
 
                 //Move arm up
                 robot.mainArm.setPower(.50);
