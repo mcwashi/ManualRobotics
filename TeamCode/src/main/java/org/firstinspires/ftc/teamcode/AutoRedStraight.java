@@ -5,8 +5,9 @@ package org.firstinspires.ftc.teamcode;
  */
 
 
-
+import android.app.Activity;
 import android.graphics.Color;
+import android.view.View;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -14,16 +15,6 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import android.app.Activity;
-import android.graphics.Color;
-import android.view.View;
-
-
-
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
-import java.util.Locale;
 
 /**
  * This file illustrates the concept of driving a path based on encoder counts.
@@ -52,9 +43,9 @@ import java.util.Locale;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Larry Pushbot: Auto Drive By Encoder", group="Pushbot")
+@Autonomous(name="Auto Red Straight", group="Pushbot")
 //@Disabled
-public class LarryAutoDriveByEncoder extends LinearOpMode {
+public class AutoRedStraight extends LinearOpMode {
 
     /* Declare OpMode members. */
     LarryHardwarePushbot robot = new LarryHardwarePushbot();   // Use a Pushbot's hardware
@@ -291,7 +282,7 @@ public class LarryAutoDriveByEncoder extends LinearOpMode {
                // sleep(3000);
 
                 //Move Backwards.
-                encoderDrive(TURN_SPEED, -.65, -.65, .25);  // S1: Forward 47 Inches with 5 Sec timeout
+                encoderDrive(DRIVE_SPEED, -.65, -.65, .25);  // S1: Forward 47 Inches with 5 Sec timeout
                 robot.colorSensorServo.setPosition(0.0);
                 //Grab the block
                 clawOffset += CLAW_SPEED;
@@ -300,7 +291,7 @@ public class LarryAutoDriveByEncoder extends LinearOpMode {
                 robot.mainArm.setPower(.50);
 
                 //Move Forward again
-                encoderDrive(DRIVE_SPEED, 3, 3, 1.5);  // S1: Forward 47 Inches with 5 Sec timeout
+                encoderDrive(TURN_SPEED, 3, 1, 1.5);  // S1: Forward 47 Inches with 5 Sec timeout
 
 
                 //sleep(2000);
@@ -311,16 +302,10 @@ public class LarryAutoDriveByEncoder extends LinearOpMode {
 
 
                 //Move Forward again
-                encoderDrive(TURN_SPEED, 2, -2, 1.0);  // S1: Forward 47 Inches with 5 Sec timeout
+                //encoderDrive(TURN_SPEED, 2, -2, 1.0);  // S1: Forward 47 Inches with 5 Sec timeout
 
                 //Open up the arms
                 clawOffset -= CLAW_SPEED;
-
-
-
-
-
-
 
 
             } else {
@@ -339,7 +324,7 @@ public class LarryAutoDriveByEncoder extends LinearOpMode {
                 robot.mainArm.setPower(.50);
 
                 //Move Forward again
-               encoderDrive(DRIVE_SPEED, 10, 10, 2.0);  // S1: Forward 47 Inches with 5 Sec timeout
+               encoderDrive(TURN_SPEED, 3, 1, 1.0);  // S1: Forward 47 Inches with 5 Sec timeout
 
                 //Open up the arms
                 clawOffset -= CLAW_SPEED;
