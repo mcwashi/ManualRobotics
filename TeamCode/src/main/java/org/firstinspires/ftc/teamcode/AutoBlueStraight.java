@@ -43,9 +43,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto Red Straight", group="Pushbot")
+@Autonomous(name="Auto Blue Straight", group="Pushbot")
 //@Disabled
-public class AutoRedStraight extends LinearOpMode {
+public class AutoBlueStraight extends LinearOpMode {
 
     /* Declare OpMode members. */
     LarryHardwarePushbot robot = new LarryHardwarePushbot();   // Use a Pushbot's hardware
@@ -273,7 +273,7 @@ public class AutoRedStraight extends LinearOpMode {
         holdTimer.reset();
         while (opModeIsActive() && holdTimer.time() < holdTime) {
             //if (sensorColor.blue() > 10) {
-            if (colorSensor.blue() > colorSensor.red()) {
+            if (colorSensor.red() > colorSensor.blue()) {
 
 
                // sleep(3000);
@@ -282,28 +282,22 @@ public class AutoRedStraight extends LinearOpMode {
                // sleep(3000);
 
                 //Move Backwards.
-                encoderDrive(TURN_SPEED, -.65, -.65, .25);  // S1: Forward 47 Inches with 5 Sec timeout
+                encoderDrive(TURN_SPEED, -.75, -.75, .25);  // S1: Forward 47 Inches with 5 Sec timeout
                 robot.colorSensorServo.setPosition(0.0);
                 //Grab the block
-                clawOffset += CLAW_SPEED;
+                //clawOffset += CLAW_SPEED;
 
                 //Move arm up
-                robot.mainArm.setPower(.50);
+                //robot.mainArm.setPower(.50);
 
                 //Move Forward again
-                encoderDrive(DRIVE_SPEED, -0.1, 1, .75);  // S1: Forward 47 Inches with 5 Sec timeout
-
-                sleep(1000);
-
-
-                //Move Forward again
-                encoderDrive(DRIVE_SPEED, 7, 7, 2);  // S1: Forward 47 Inches with 5 Sec timeout
+                //encoderDrive(DRIVE_SPEED, 1, 5, 2);  // S1: Forward 47 Inches with 5 Sec timeout
 
 
                 //sleep(2000);
 
                 //Move arm up
-                robot.mainArm.setPower(.10);
+                //robot.mainArm.setPower(0);
 
 
 
@@ -311,35 +305,29 @@ public class AutoRedStraight extends LinearOpMode {
                 //encoderDrive(TURN_SPEED, 2, -2, 1.0);  // S1: Forward 47 Inches with 5 Sec timeout
 
                 //Open up the arms
-                clawOffset -= CLAW_SPEED;
+                //clawOffset -= CLAW_SPEED;
 
 
             } else {
                 //Move Forward
-                encoderDrive(DRIVE_SPEED, 3, 3, 1);  // S1: Forward 47 Inches with 5 Sec timeout
+                encoderDrive(TURN_SPEED, 2, 2, 1);  // S1: Forward 47 Inches with 5 Sec timeout
 
-                sleep(2000);
+                //sleep(2000);
 
                 //Move servo arm up
                 robot.colorSensorServo.setPosition(0.0);
 
                 //Grab the block
-                clawOffset += CLAW_SPEED;
+                //clawOffset += CLAW_SPEED;
 
                 //Move arm up
-                robot.mainArm.setPower(.50);
+                //robot.mainArm.setPower(.50);
 
                 //Move Forward again
-                encoderDrive(DRIVE_SPEED, -0.1, 1, .75);  // S1: Forward 47 Inches with 5 Sec timeout
-
-                sleep(1000);
-
-
-                //Move Forward again
-               encoderDrive(TURN_SPEED, 7, 7, 2.0);  // S1: Forward 47 Inches with 5 Sec timeout
+               //encoderDrive(TURN_SPEED, 2, 1, 1.0);  // S1: Forward 47 Inches with 5 Sec timeout
 
                 //Open up the arms
-                clawOffset -= CLAW_SPEED;
+                //clawOffset -= CLAW_SPEED;
 
                 //Move Backwards.
                 //encoderDrive(DRIVE_SPEED, -.25, -.25, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
