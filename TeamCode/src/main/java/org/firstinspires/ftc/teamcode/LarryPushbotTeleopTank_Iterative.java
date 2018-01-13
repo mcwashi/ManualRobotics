@@ -99,6 +99,7 @@ public class LarryPushbotTeleopTank_Iterative extends OpMode{
         double right;
         double longRelicClaw;
         double shortRelicClaw;
+        double shortRelicClaw2;
 
         //Wrist is the long relic claw
         //Hand is the short relic claw
@@ -108,6 +109,8 @@ public class LarryPushbotTeleopTank_Iterative extends OpMode{
         right = -gamepad1.right_stick_y;
         longRelicClaw = gamepad2.left_trigger;
         shortRelicClaw = gamepad2.right_trigger;
+
+
 
         robot.leftDrive.setPower(left);
         robot.rightDrive.setPower(right);
@@ -123,10 +126,21 @@ public class LarryPushbotTeleopTank_Iterative extends OpMode{
 
 
 
+
+
         // Move both servos to new position.  Assume servos are mirror image of each other.
         clawOffset = Range.clip(clawOffset, -0.5, 0.5);
         robot.leftClaw.setPosition(robot.MID_SERVO + clawOffset);
         robot.rightClaw.setPosition(robot.MID_SERVO - clawOffset);
+
+        //i was told not to use this on 1-13-18
+        // if(gamepad2.a)
+          //  robot.shortReclicClaw.setPosition(robot.ARM_UP_POWER);
+        // else if (gamepad2.y)
+          //   robot.shortReclicClaw.setPosition(robot.ARM_DOWN_POWER);
+
+
+
 
         // Use gamepad buttons to move the arm up (Y) and down (A)
         if (gamepad1.y)
@@ -142,6 +156,8 @@ public class LarryPushbotTeleopTank_Iterative extends OpMode{
             robot.slideArm.setPower(robot.ARM_UP_POWER);
         else if (gamepad2.left_bumper)
             robot.slideArm.setPower(robot.ARM_DOWN_POWER);
+
+
         else
             robot.slideArm.setPower(0.0);
 

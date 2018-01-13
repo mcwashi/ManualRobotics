@@ -162,7 +162,7 @@ public class AutoBlueStraight extends LinearOpMode {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         armDown(3.0);
-        jewel(8.0);
+        robotMove(8.0);
         //encoderDrive(DRIVE_SPEED, 4, 4, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         //encoderDrive(TURN_SPEED, 3, -3, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         //encoderDrive(DRIVE_SPEED, 3, 3, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
@@ -233,7 +233,7 @@ public class AutoBlueStraight extends LinearOpMode {
               sleep(5000);   // optional pause after each move
         }
     }
-    public void jewel(double holdTime){
+    public void robotMove(double holdTime){
 
         // hsvValues is an array that will hold the hue, saturation, and value information.
         float hsvValues[] = {0F, 0F, 0F};

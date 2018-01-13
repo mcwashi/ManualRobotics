@@ -275,35 +275,31 @@ public class AutoRedStraight extends LinearOpMode {
             //if (sensorColor.blue() > 10) {
             if (colorSensor.blue() > colorSensor.red()) {
 
-
-               // sleep(3000);
-                //Move servo arm up
-
-               // sleep(3000);
-
                 //Move Backwards.
                 encoderDrive(TURN_SPEED, -.65, -.65, .25);  // S1: Forward 47 Inches with 5 Sec timeout
-                robot.colorSensorServo.setPosition(0.0);
-                //Grab the block
-                clawOffset += CLAW_SPEED;
-
-                //Move arm up
-                robot.mainArm.setPower(.50);
-
-                //Move Forward again
-                encoderDrive(DRIVE_SPEED, -0.1, 1, .75);  // S1: Forward 47 Inches with 5 Sec timeout
-
                 sleep(1000);
 
+                robot.colorSensorServo.setPosition(0.0);
+                //Grab the block
+                //clawOffset += CLAW_SPEED;
+
+                //Move arm up
+                //robot.mainArm.setPower(.50);
 
                 //Move Forward again
-                encoderDrive(DRIVE_SPEED, 7, 7, 2);  // S1: Forward 47 Inches with 5 Sec timeout
+                //encoderDrive(DRIVE_SPEED, -0.1, 1, .75);  // S1: Forward 47 Inches with 5 Sec timeout
+
+                //sleep(1000);
+
+
+                //Move Forward again
+                //encoderDrive(DRIVE_SPEED, 7, 7, 2);  // S1: Forward 47 Inches with 5 Sec timeout
 
 
                 //sleep(2000);
 
                 //Move arm up
-                robot.mainArm.setPower(.10);
+                //robot.mainArm.setPower(.10);
 
 
 
@@ -311,35 +307,35 @@ public class AutoRedStraight extends LinearOpMode {
                 //encoderDrive(TURN_SPEED, 2, -2, 1.0);  // S1: Forward 47 Inches with 5 Sec timeout
 
                 //Open up the arms
-                clawOffset -= CLAW_SPEED;
+                //clawOffset -= CLAW_SPEED;
 
 
             } else {
                 //Move Forward
                 encoderDrive(DRIVE_SPEED, 3, 3, 1);  // S1: Forward 47 Inches with 5 Sec timeout
 
-                sleep(2000);
+                sleep(1000);
 
                 //Move servo arm up
                 robot.colorSensorServo.setPosition(0.0);
 
                 //Grab the block
-                clawOffset += CLAW_SPEED;
+                //clawOffset += CLAW_SPEED;
 
                 //Move arm up
-                robot.mainArm.setPower(.50);
+                //robot.mainArm.setPower(.50);
 
                 //Move Forward again
-                encoderDrive(DRIVE_SPEED, -0.1, 1, .75);  // S1: Forward 47 Inches with 5 Sec timeout
+                //encoderDrive(DRIVE_SPEED, -0.1, 1, .75);  // S1: Forward 47 Inches with 5 Sec timeout
 
-                sleep(1000);
+                //sleep(1000);
 
 
                 //Move Forward again
-               encoderDrive(TURN_SPEED, 7, 7, 2.0);  // S1: Forward 47 Inches with 5 Sec timeout
+               //encoderDrive(TURN_SPEED, 7, 7, 2.0);  // S1: Forward 47 Inches with 5 Sec timeout
 
                 //Open up the arms
-                clawOffset -= CLAW_SPEED;
+                //clawOffset -= CLAW_SPEED;
 
                 //Move Backwards.
                 //encoderDrive(DRIVE_SPEED, -.25, -.25, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
