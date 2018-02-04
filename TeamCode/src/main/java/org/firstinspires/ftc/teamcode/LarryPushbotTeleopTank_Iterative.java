@@ -153,9 +153,9 @@ public class LarryPushbotTeleopTank_Iterative extends OpMode{
 
         //Slide Arm Controller buttons??????
         if (gamepad2.right_bumper)
-            robot.slideArm.setPower(robot.ARM_UP_POWER);
+            robot.slideArm.setPower(1);
         else if (gamepad2.left_bumper)
-            robot.slideArm.setPower(robot.ARM_DOWN_POWER);
+            robot.slideArm.setPower(-1);
 
 
         else

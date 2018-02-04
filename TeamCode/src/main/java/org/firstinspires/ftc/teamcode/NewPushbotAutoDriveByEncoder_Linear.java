@@ -81,6 +81,8 @@ public class NewPushbotAutoDriveByEncoder_Linear extends LinearOpMode {
     static final double     DRIVE_SPEED             = 0.6;
     static final double     TURN_SPEED              = 0.5;
     ColorSensor colorSensor;
+    double          clawOffset  = 0.0 ;                  // Servo mid position
+    final double    CLAW_SPEED  = 0.02 ;
 
 
 
@@ -118,27 +120,23 @@ public class NewPushbotAutoDriveByEncoder_Linear extends LinearOpMode {
 
         armDown(3.0);
 
+        double right = 0.65;
+        double left = 0.002;
+        double mainArmUp = .50;
+        double mainArmDown = .10;
+
+
         if (colorSensor.blue() > colorSensor.red()) {
 
-            robot.hitBallServo.setPosition(0.65);
-            sleep(2000);
-            robot.colorSensorServo.setPosition(0.002);
-            sleep(2000);
-            robot.hitBallServo.setPosition(0.50);
-
-
-
+            hitBallServo(right);
         }
 
         else{
-
-            robot.hitBallServo.setPosition(0.002);
-            sleep(2000);
-            robot.colorSensorServo.setPosition(0.0);
-            sleep(1000);
-            robot.hitBallServo.setPosition(0.50);
-
+            hitBallServo(left);
         }
+
+        //Lift Arm up
+        liftMainArm(mainArmUp);
 
 
 
@@ -153,7 +151,12 @@ public class NewPushbotAutoDriveByEncoder_Linear extends LinearOpMode {
 
         //robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
         //robot.rightClaw.setPosition(0.0);
-        sleep(1000);     // pause for servos to move
+        sleep(2000);     // pause for servos to move
+
+        liftMainArm(mainArmDown);
+        sleep(2000);
+
+        clawOffset -= CLAW_SPEED;
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -221,12 +224,30 @@ public class NewPushbotAutoDriveByEncoder_Linear extends LinearOpMode {
         }
     }
 
+    public void hitBallServo(double hitDirection) {
+
+        robot.hitBallServo.setPosition(hitDirection);
+        sleep(2000);
+        robot.colorSensorServo.setPosition(0.002);
+        sleep(2000);
+        robot.hitBallServo.setPosition(0.50);
+        sleep(2000);
+
+
+
+    }
+
+    public void liftMainArm(double verticalPosition){
+        robot.mainArm.setPower(verticalPosition);
+        sleep(2000);
+    }
+
 
     public void armDown(double holdTime) {
         ElapsedTime holdTimer = new ElapsedTime();
         holdTimer.reset();
         while (opModeIsActive() && holdTimer.time() < holdTime) {
-            robot.colorSensorServo.setPosition(.75);
+            robot.colorSensorServo.setPosition(.50);
         }
     }
 }
