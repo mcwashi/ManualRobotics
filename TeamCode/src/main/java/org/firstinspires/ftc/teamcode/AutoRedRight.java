@@ -52,16 +52,16 @@ public class AutoRedRight extends LinearOpMode {
     ElapsedTime runtime = new ElapsedTime();
     ColorSensor colorSensor;
 
-    static final double COUNTS_PER_MOTOR_REV = 1220;    // eg: TETRIX Motor Encoder
+    static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: andy mark Motor Encoder
     static final double DRIVE_GEAR_REDUCTION = 1.0;     // This is < 1.0 if geared UP
     static final double WHEEL_DIAMETER_INCHES = 3.0;     // For figuring circumference
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double DRIVE_SPEED = 0.1;
-    static final double TURN_SPEED = 0.5;
+    static final double TURN_SPEED = 0.25;
     double          clawOffset  = 0.0 ;                  // Servo mid position
     final double    CLAW_SPEED  = 0.02 ;
-    ColorSensor sensorColor;
+
     DistanceSensor sensorDistance;
 
 
@@ -78,8 +78,7 @@ public class AutoRedRight extends LinearOpMode {
         colorSensor.enableLed(true);
 
 
-        // get a reference to the color sensor.
-        sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
+
 
         // get a reference to the distance sensor that shares the same name.
         sensorDistance = hardwareMap.get(DistanceSensor.class, "sensor_color_distance");
@@ -98,7 +97,7 @@ public class AutoRedRight extends LinearOpMode {
 
 
         // Send telemetry message to signify robot waiting;
-       // telemetry.addData("Status", "Resetting Encoders");    //
+        // telemetry.addData("Status", "Resetting Encoders");    //
         //telemetry.update();
 
         //robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -123,46 +122,46 @@ public class AutoRedRight extends LinearOpMode {
         waitForStart();
 
         //while (opModeIsActive()) {
-            // convert the RGB values to HSV values.
-            // multiply by the SCALE_FACTOR.
-            // then cast it back to int (SCALE_FACTOR is a double)
-          //  Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
-            //        (int) (sensorColor.green() * SCALE_FACTOR),
-            //          (int) (sensorColor.blue() * SCALE_FACTOR),
-            //        hsvValues);
+        // convert the RGB values to HSV values.
+        // multiply by the SCALE_FACTOR.
+        // then cast it back to int (SCALE_FACTOR is a double)
+        //  Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
+        //        (int) (sensorColor.green() * SCALE_FACTOR),
+        //          (int) (sensorColor.blue() * SCALE_FACTOR),
+        //        hsvValues);
 
-            // send the info back to driver station using telemetry function.
-            //telemetry.addData("Distance (cm)",
-              //      String.format(Locale.US, "%.02f", sensorDistance.getDistance(DistanceUnit.CM)));
-            //telemetry.addData("Alpha", sensorColor.alpha());
-            //telemetry.addData("Red  ", sensorColor.red());
-            //telemetry.addData("Green", sensorColor.green());
-            //telemetry.addData("Blue ", sensorColor.blue());
-            //telemetry.addData("Hue", hsvValues[0]);
+        // send the info back to driver station using telemetry function.
+        //telemetry.addData("Distance (cm)",
+        //      String.format(Locale.US, "%.02f", sensorDistance.getDistance(DistanceUnit.CM)));
+        //telemetry.addData("Alpha", sensorColor.alpha());
+        //telemetry.addData("Red  ", sensorColor.red());
+        //telemetry.addData("Green", sensorColor.green());
+        //telemetry.addData("Blue ", sensorColor.blue());
+        //telemetry.addData("Hue", hsvValues[0]);
 
-            // change the background color to match the color detected by the RGB sensor.
-            // pass a reference to the hue, saturation, and value array as an argument
-            // to the HSVToColor method.
-            //relativeLayout.post(new Runnable() {
-              //  public void run() {
-              //      relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
-              //  }
-           // });
+        // change the background color to match the color detected by the RGB sensor.
+        // pass a reference to the hue, saturation, and value array as an argument
+        // to the HSVToColor method.
+        //relativeLayout.post(new Runnable() {
+        //  public void run() {
+        //      relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
+        //  }
+        // });
 
-            //telemetry.update();
+        //telemetry.update();
 
-            // Set the panel back to the default color
-            //relativeLayout.post(new Runnable() {
-              //  public void run() {
-                //    relativeLayout.setBackgroundColor(Color.WHITE);
-               // }
-           // });
-       // }
+        // Set the panel back to the default color
+        //relativeLayout.post(new Runnable() {
+        //  public void run() {
+        //    relativeLayout.setBackgroundColor(Color.WHITE);
+        // }
+        // });
+        // }
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         armDown(3.0);
-        robotMove(8.0);
+        robotMove(5.0);
         //encoderDrive(DRIVE_SPEED, 4, 4, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         //encoderDrive(TURN_SPEED, 3, -3, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         //encoderDrive(DRIVE_SPEED, 3, 3, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
@@ -181,13 +180,18 @@ public class AutoRedRight extends LinearOpMode {
      *  3) Driver stops the opmode running.
      */
     public void encoderDrive(double speed,
-                             double leftInches, double rightInches,
-                             double timeoutS) {
+                             double leftInches, double rightInches) {
         int newLeftTarget;
         int newRightTarget;
 
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
+
+
+            //reset encoders 2-3-18
+            robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
 
             // Determine new target position, and pass to motor controller
             newLeftTarget = robot.leftDrive.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
@@ -210,9 +214,7 @@ public class AutoRedRight extends LinearOpMode {
             // always end the motion as soon as possible.
             // However, if you require that BOTH motors have finished their moves before the robot continues
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
-            while (opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
-                    (robot.leftDrive.isBusy() && robot.rightDrive.isBusy())) {
+            while   (robot.leftDrive.isBusy() && robot.rightDrive.isBusy()) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
@@ -222,6 +224,10 @@ public class AutoRedRight extends LinearOpMode {
                 telemetry.update();
             }
 
+
+
+
+
             // Stop all motion;
             robot.leftDrive.setPower(0);
             robot.rightDrive.setPower(0);
@@ -230,7 +236,7 @@ public class AutoRedRight extends LinearOpMode {
             robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-              sleep(5000);   // optional pause after each move
+            //sleep(5000);   // optional pause after each move
         }
     }
     public void robotMove(double holdTime){
@@ -248,56 +254,76 @@ public class AutoRedRight extends LinearOpMode {
         // convert the RGB values to HSV values.
         // multiply by the SCALE_FACTOR.
         // then cast it back to int (SCALE_FACTOR is a double)
-        Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
-                (int) (sensorColor.green() * SCALE_FACTOR),
-                (int) (sensorColor.blue() * SCALE_FACTOR),
+        Color.RGBToHSV((int) (colorSensor.red() * SCALE_FACTOR),
+                (int) (colorSensor.green() * SCALE_FACTOR),
+                (int) (colorSensor.blue() * SCALE_FACTOR),
                 hsvValues);
         // send the info back to driver station using telemetry function.
-        telemetry.addData("Alpha", sensorColor.alpha());
-        telemetry.addData("Red  ", sensorColor.red());
-        telemetry.addData("Green", sensorColor.green());
+        telemetry.addData("Alpha", colorSensor.alpha());
+        telemetry.addData("Red  ", colorSensor.red());
+        telemetry.addData("Green", colorSensor.green());
         telemetry.addData("Blue ", colorSensor.blue());
         //telemetry.addData()
         //telemetry.addData("Hue", hsvValues[0]);
-        //telemetry.update();
-       // armUp(holdTime);
+        telemetry.update();
+        // armUp(holdTime);
 
         // get a reference to the RelativeLayout so we can change the background
         // color of the Robot Controller app to match the hue detected by the RGB sensor.
         int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
         final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
 
+        // change the background color to match the color detected by the RGB sensor.
+        // pass a reference to the hue, saturation, and value array as an argument
+        // to the HSVToColor method.
+        relativeLayout.post(new Runnable() {
+          public void run() {
+              relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
+          }
+         });
+
 
 
         ElapsedTime holdTimer = new ElapsedTime();
         holdTimer.reset();
-        while (opModeIsActive() && holdTimer.time() < holdTime) {
+        while (opModeIsActive()) {
             //if (sensorColor.blue() > 10) {
-            if (colorSensor.red() > colorSensor.blue()) {
+            //if(colorSensor)
+            if (colorSensor.blue() > colorSensor.red()) {
 
 
-               // sleep(3000);
+                // sleep(3000);
                 //Move servo arm up
 
-               // sleep(3000);
+                // sleep(3000);
 
                 //Move Backwards.
-                encoderDrive(TURN_SPEED, -.50, -.50, .25);  // S1: Forward 47 Inches with 5 Sec timeout
+                //encoderDrive(TURN_SPEED, -.50, -.50, .25);  // S1: Forward 47 Inches with 5 Sec timeout
+
+                //robot.colorSensorServo.setPosition(0.0);
+                //sleep(2000);
+                //encoderDrive(TURN_SPEED, -.25, .25);
+
+                //encoderDrive(DRIVE_SPEED, 1, 1);
+                robot.hitBallServo.setPosition(0.65);
+                sleep(2000);
                 robot.colorSensorServo.setPosition(0.0);
+                sleep(1000);
+                robot.hitBallServo.setPosition(0.50);
                 //Grab the block
-                clawOffset += CLAW_SPEED;
+                //clawOffset += CLAW_SPEED;
 
                 //Move arm up
-                robot.mainArm.setPower(.50);
+                //robot.mainArm.setPower(.50);
 
                 //Move Forward again
-                encoderDrive(DRIVE_SPEED, 5, 1, 2);  // S1: Forward 47 Inches with 5 Sec timeout
+                encoderDrive(DRIVE_SPEED, 1, 1);  // S1: Forward 47 Inches with 5 Sec timeout
 
 
                 //sleep(2000);
 
                 //Move arm up
-                robot.mainArm.setPower(.10);
+                //robot.mainArm.setPower(.10);
 
 
 
@@ -305,29 +331,40 @@ public class AutoRedRight extends LinearOpMode {
                 //encoderDrive(TURN_SPEED, 2, -2, 1.0);  // S1: Forward 47 Inches with 5 Sec timeout
 
                 //Open up the arms
-                clawOffset -= CLAW_SPEED;
+                //clawOffset -= CLAW_SPEED;
 
 
             } else {
-                //Move Forward
-                encoderDrive(DRIVE_SPEED, 5, 5, 1);  // S1: Forward 47 Inches with 5 Sec timeout
+                //robot.colorSensorServo.setPosition(0.0);
+                //sleep(2000);
+                //encoderDrive(TURN_SPEED, 2, -2);
+                robot.hitBallServo.setPosition(0.002);
 
                 sleep(2000);
-
-                //Move servo arm up
                 robot.colorSensorServo.setPosition(0.0);
-
+                sleep(1000);
+                robot.hitBallServo.setPosition(0.50);
                 //Grab the block
-                clawOffset += CLAW_SPEED;
+                //clawOffset += CLAW_SPEED;
 
                 //Move arm up
-                robot.mainArm.setPower(.50);
+                //robot.mainArm.setPower(.50);
 
                 //Move Forward again
-               encoderDrive(TURN_SPEED, 2, 1, .25);  // S1: Forward 47 Inches with 5 Sec timeout
+                encoderDrive(DRIVE_SPEED, 1, 1);  // S1: Forward 47 Inches with 5 Sec timeout
+
+
+                //Grab the block
+                //clawOffset += CLAW_SPEED;
+
+                //Move arm up
+                //robot.mainArm.setPower(.50);
+
+                //Move Forward again
+                //encoderDrive(TURN_SPEED, 2, 1, .25);  // S1: Forward 47 Inches with 5 Sec timeout
 
                 //Open up the arms
-                clawOffset -= CLAW_SPEED;
+                //clawOffset -= CLAW_SPEED;
 
                 //Move Backwards.
                 //encoderDrive(DRIVE_SPEED, -.25, -.25, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout

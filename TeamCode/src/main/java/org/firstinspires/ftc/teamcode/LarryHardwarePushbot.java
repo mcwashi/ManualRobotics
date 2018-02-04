@@ -64,6 +64,7 @@ public class LarryHardwarePushbot
     public Servo    longReclicClaw    = null;
     public Servo    shortReclicClaw   = null;
     public Servo    colorSensorServo  = null;
+    public Servo    hitBallServo      = null;
 
 
     public static final double MID_SERVO       =  0.5 ;
@@ -114,12 +115,15 @@ public class LarryHardwarePushbot
         longReclicClaw  = hwMap.get(Servo.class, "long_relic_claw");
         shortReclicClaw = hwMap.get(Servo.class, "short_relic_claw");
         colorSensorServo = hwMap.get(Servo.class, "color_sensor_servo");
+        hitBallServo = hwMap.get(Servo.class, "hit_ball_servo");
+
 
         leftClaw.setPosition(MID_SERVO);
         rightClaw.setPosition(MID_SERVO);
         longReclicClaw.setPosition(0);
         shortReclicClaw.setPosition(0);
         colorSensorServo.setPosition(0);
+        hitBallServo.setPosition(.50);
     }
  }
 

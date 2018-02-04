@@ -134,11 +134,11 @@ public class LarryPushbotTeleopTank_Iterative extends OpMode{
         robot.rightClaw.setPosition(robot.MID_SERVO - clawOffset);
 
         //i was told not to use this on 1-13-18
-        // if(gamepad2.a)
-          //  robot.shortReclicClaw.setPosition(robot.ARM_UP_POWER);
-        // else if (gamepad2.y)
-          //   robot.shortReclicClaw.setPosition(robot.ARM_DOWN_POWER);
-
+        //if(gamepad2.a)
+          //  robot.longReclicClaw.setPosition(1);
+         //else if (gamepad2.y)
+           // robot.longReclicClaw.setPosition(0);
+        
 
 
 
