@@ -30,13 +30,10 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 /**
  * This file illustrates the concept of driving a path based on encoder counts.
@@ -65,9 +62,9 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="New Pushbot: Auto Drive By Encoder", group="Pushbot")
+@Autonomous(name="Auto Red Drive By Encoder", group="Pushbot")
 //@Disabled
-public class NewPushbotAutoDriveByEncoder_Linear extends LinearOpMode {
+public class AutoRedDriveByEncoder extends LinearOpMode {
 
     /* Declare OpMode members. */
     LarryHardwarePushbot robot = new LarryHardwarePushbot();   // Use a Pushbot's hardware
@@ -78,7 +75,7 @@ public class NewPushbotAutoDriveByEncoder_Linear extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.6;
+    static final double     DRIVE_SPEED             = 0.3;
     static final double     TURN_SPEED              = 0.5;
     ColorSensor colorSensor;
     double          clawOffset  = 0.0 ;                  // Servo mid position
@@ -122,17 +119,17 @@ public class NewPushbotAutoDriveByEncoder_Linear extends LinearOpMode {
 
         double right = 0.65;
         double left = 0.002;
-        double mainArmUp = .50;
+        double mainArmUp = .35;
         double mainArmDown = .10;
 
 
         if (colorSensor.blue() > colorSensor.red()) {
 
-            hitBallServo(right);
+            hitBallServo(left);
         }
 
         else{
-            hitBallServo(left);
+            hitBallServo(right);
         }
 
         //Lift Arm up
@@ -144,8 +141,13 @@ public class NewPushbotAutoDriveByEncoder_Linear extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         encoderDrive(DRIVE_SPEED,  3,  3, .50);  // S1: Forward 47 Inches with 5 Sec timeout
         //encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-        encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-        encoderDrive(DRIVE_SPEED,  5,  5, .75);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(TURN_SPEED,   3, -3, .90);  // S2: Turn Right 12 Inches with 4 Sec timeout
+        encoderDrive(DRIVE_SPEED,  3,  3, .75);  // S1: Forward 47 Inches with 5 Sec timeout
+
+        encoderDrive(TURN_SPEED,   3, -3, .90);  // S2: Turn Right 12 Inches with 4 Sec timeout
+
+        encoderDrive(DRIVE_SPEED,  3,  3, .75);  // S1: Forward 47 Inches with 5 Sec timeout
+
 
         //encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
@@ -247,7 +249,7 @@ public class NewPushbotAutoDriveByEncoder_Linear extends LinearOpMode {
         ElapsedTime holdTimer = new ElapsedTime();
         holdTimer.reset();
         while (opModeIsActive() && holdTimer.time() < holdTime) {
-            robot.colorSensorServo.setPosition(.50);
+            robot.colorSensorServo.setPosition(.60);
         }
     }
 }
