@@ -31,36 +31,13 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-/**
- * This file illustrates the concept of driving a path based on encoder counts.
- * It uses the common Pushbot hardware class to define the drive on the robot.
- * The code is structured as a LinearOpMode
- *
- * The code REQUIRES that you DO have encoders on the wheels,
- *   otherwise you would use: PushbotAutoDriveByTime;
- *
- *  This code ALSO requires that the drive Motors have been configured such that a positive
- *  power command moves them forwards, and causes the encoders to count UP.
- *
- *   The desired path in this example is:
- *   - Drive forward for 48 inches
- *   - Spin right for 12 Inches
- *   - Drive Backwards for 24 inches
- *   - Stop and close the claw.
- *
- *  The code is written using a method called: encoderDrive(speed, leftInches, rightInches, timeoutS)
- *  that performs the actual movement.
- *  This methods assumes that each movement is relative to the last stopping place.
- *  There are other ways to perform encoder based moves, but this method is probably the simplest.
- *  This code uses the RUN_TO_POSITION mode to enable the Motor controllers to generate the run profile
- *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
- */
+
 
 @Autonomous(name="Auto Blue Drive By Encoder", group="Pushbot")
 //@Disabled
@@ -119,7 +96,7 @@ public class AutoBlueDriveByEncoder extends LinearOpMode {
 
         double right = 0.65;
         double left = 0.002;
-        double mainArmUp = .35;
+        double mainArmUp = .50;
         double mainArmDown = .10;
 
 
@@ -139,13 +116,10 @@ public class AutoBlueDriveByEncoder extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
+        encoderDrive(DRIVE_SPEED,  1,  1, .25);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(TURN_SPEED,   -3, 3, .75);  // S2: Turn Right 12 Inches with 4 Sec timeout
         encoderDrive(DRIVE_SPEED,  3,  3, .50);  // S1: Forward 47 Inches with 5 Sec timeout
-        //encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-        encoderDrive(TURN_SPEED,   3, -3, .90);  // S2: Turn Right 12 Inches with 4 Sec timeout
-        encoderDrive(DRIVE_SPEED,  3,  3, .75);  // S1: Forward 47 Inches with 5 Sec timeout
-
-        encoderDrive(TURN_SPEED,   3, -3, .90);  // S2: Turn Right 12 Inches with 4 Sec timeout
-
+        encoderDrive(TURN_SPEED,   -3, 3, .75);  // S2: Turn Right 12 Inches with 4 Sec timeout
         encoderDrive(DRIVE_SPEED,  3,  3, .75);  // S1: Forward 47 Inches with 5 Sec timeout
 
 
@@ -251,5 +225,32 @@ public class AutoBlueDriveByEncoder extends LinearOpMode {
         while (opModeIsActive() && holdTimer.time() < holdTime) {
             robot.colorSensorServo.setPosition(.60);
         }
+    }
+
+    @TeleOp(name = "org.firstinspires.ftc.teamcode.AutoBlueDriveByEncoder.FirstClass")
+    public static class FirstClass extends OpMode {
+
+        DcMotor leftSide;
+        DcMotor rightSide;
+        ColorSensor colorSensor;
+
+        public void init() {
+            //leftSide = hardwareMap.dcMotor.get("left_drive");
+            //rightSide = hardwareMap.dcMotor.get("right_drive");
+            //servo1 = hardwareMap.servo.get("servo");
+            //rightSide.setDirection(DcMotorSimple.Direction.REVERSE);
+            colorSensor = hardwareMap.get(ColorSensor.class, "sensor_color");
+
+            //colorSensor = hardwareMap.get(ColorSensor.class, "sensor_color");
+
+        }
+
+        public void loop() {
+            //leftSide.setPower(-gamepad1.left_stick_y / 3);
+            //rightSide.setPower(-gamepad1.right_stick_y / 3);
+            colorSensor.red();
+            colorSensor.blue();
+        }
+
     }
 }

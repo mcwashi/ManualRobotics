@@ -35,11 +35,36 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+/**
+ * This file illustrates the concept of driving a path based on encoder counts.
+ * It uses the common Pushbot hardware class to define the drive on the robot.
+ * The code is structured as a LinearOpMode
+ *
+ * The code REQUIRES that you DO have encoders on the wheels,
+ *   otherwise you would use: PushbotAutoDriveByTime;
+ *
+ *  This code ALSO requires that the drive Motors have been configured such that a positive
+ *  power command moves them forwards, and causes the encoders to count UP.
+ *
+ *   The desired path in this example is:
+ *   - Drive forward for 48 inches
+ *   - Spin right for 12 Inches
+ *   - Drive Backwards for 24 inches
+ *   - Stop and close the claw.
+ *
+ *  The code is written using a method called: encoderDrive(speed, leftInches, rightInches, timeoutS)
+ *  that performs the actual movement.
+ *  This methods assumes that each movement is relative to the last stopping place.
+ *  There are other ways to perform encoder based moves, but this method is probably the simplest.
+ *  This code uses the RUN_TO_POSITION mode to enable the Motor controllers to generate the run profile
+ *
+ * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
+ * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
+ */
 
-
-@Autonomous(name="Auto Red Drive By Encoder", group="Pushbot")
+@Autonomous(name="Auto Blue Jewel", group="Pushbot")
 //@Disabled
-public class AutoRedDriveByEncoder extends LinearOpMode {
+public class AutoBlueJewel extends LinearOpMode {
 
     /* Declare OpMode members. */
     LarryHardwarePushbot robot = new LarryHardwarePushbot();   // Use a Pushbot's hardware
@@ -52,14 +77,7 @@ public class AutoRedDriveByEncoder extends LinearOpMode {
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.3;
     static final double     TURN_SPEED              = 0.5;
-
-
     ColorSensor colorSensor;
-
-
-
-
-
     double          clawOffset  = 0.0 ;                  // Servo mid position
     final double    CLAW_SPEED  = 0.02 ;
 
@@ -101,11 +119,11 @@ public class AutoRedDriveByEncoder extends LinearOpMode {
 
         double right = 0.65;
         double left = 0.002;
-        double mainArmUp = .35;
+        double mainArmUp = .50;
         double mainArmDown = .10;
 
 
-        if (colorSensor.blue() > colorSensor.red()) {
+        if (colorSensor.red() > colorSensor.blue()) {
 
             hitBallServo(left);
         }
@@ -115,25 +133,32 @@ public class AutoRedDriveByEncoder extends LinearOpMode {
         }
 
         //Lift Arm up
-        liftMainArm(mainArmUp);
-
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  3,  3, .50);
-        encoderDrive(TURN_SPEED,   3, -3, .90);
-        encoderDrive(DRIVE_SPEED,  3,  3, .75);
-        encoderDrive(TURN_SPEED,   3, -3, .90);
-        encoderDrive(DRIVE_SPEED,  3,  3, .75);
-
-        sleep(1000);     // pause for servos to move
-
-        liftMainArm(mainArmDown);
-        sleep(1000);
-
-        clawOffset -= CLAW_SPEED;
-
-        telemetry.addData("Path", "Complete");
-        telemetry.update();
+//        liftMainArm(mainArmUp);
+//
+//
+//
+//        // Step through each leg of the path,
+//        // Note: Reverse movement is obtained by setting a negative distance (not speed)
+//        encoderDrive(DRIVE_SPEED,  1,  1, .25);  // S1: Forward 47 Inches with 5 Sec timeout
+//        encoderDrive(TURN_SPEED,   -3, 3, .75);  // S2: Turn Right 12 Inches with 4 Sec timeout
+//        encoderDrive(DRIVE_SPEED,  3,  3, .50);  // S1: Forward 47 Inches with 5 Sec timeout
+//        encoderDrive(TURN_SPEED,   -3, 3, .75);  // S2: Turn Right 12 Inches with 4 Sec timeout
+//        encoderDrive(DRIVE_SPEED,  3,  3, .75);  // S1: Forward 47 Inches with 5 Sec timeout
+//
+//
+//        //encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+//
+//        //robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
+//        //robot.rightClaw.setPosition(0.0);
+//        sleep(2000);     // pause for servos to move
+//
+//        liftMainArm(mainArmDown);
+//        sleep(2000);
+//
+//        clawOffset -= CLAW_SPEED;
+//
+//        telemetry.addData("Path", "Complete");
+//        telemetry.update();
     }
 
     /*
@@ -168,7 +193,12 @@ public class AutoRedDriveByEncoder extends LinearOpMode {
             robot.leftDrive.setPower(Math.abs(speed));
             robot.rightDrive.setPower(Math.abs(speed));
 
-
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
+            // its target position, the motion will stop.  This is "safer" in the event that the robot will
+            // always end the motion as soon as possible.
+            // However, if you require that BOTH motors have finished their moves before the robot continues
+            // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                    (runtime.seconds() < timeoutS) &&
                    (robot.leftDrive.isBusy() && robot.rightDrive.isBusy())) {
