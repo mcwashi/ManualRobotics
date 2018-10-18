@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
@@ -7,6 +8,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.teamcode.LilHardwareBot;
 
 @TeleOp(name="Pushbot: Lil Bot Teleop", group="Pushbot")
+@Disabled
 public class LilBotTeleOp extends OpMode {
 
     LilHardwareBot robot = new LilHardwareBot();

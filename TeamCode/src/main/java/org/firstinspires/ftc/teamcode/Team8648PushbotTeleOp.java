@@ -53,8 +53,8 @@ public class Team8648PushbotTeleOp extends OpMode {
         right = -gamepad1.right_stick_y;
 
         //arm
-        armMotor = -gamepad2.left_stick_y;
-        armRaiseMotor = -gamepad2.right_stick_y;
+        armMotor = -gamepad2.right_stick_y;
+        armRaiseMotor = -gamepad2.left_stick_y;
 
 
 
@@ -66,12 +66,12 @@ public class Team8648PushbotTeleOp extends OpMode {
 
 
         // Use gamepad buttons to move the arm up (Y) and down (A)
-        if (gamepad1.y)
+        if (gamepad1.right_bumper)
             robot.lift.setPower(1);
-        else if (gamepad1.a)
-            robot.lift.setPower(-0.01);
+        else if (gamepad1.left_bumper)
+            robot.lift.setPower(-1);
         else
-            robot.lift.setPower(0.2);
+            robot.lift.setPower(0);
 
 
         //Slide Arm Controller buttons??????
@@ -79,7 +79,8 @@ public class Team8648PushbotTeleOp extends OpMode {
         if(gamepad2.a)
             robot.armServo.setPosition(1);
         else if (gamepad2.y)
-            robot.armServo.setPosition(0);
+            robot.armServo.setPosition(-1);
+        else robot.armServo.setPosition(0);
 
 
 
